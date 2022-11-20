@@ -2,6 +2,7 @@
   "name": "@softopus/eslint-config",
   "version": "1.0.0",
   "main": "index.js",
+  "public": true,
   "dependencies": {
     "@typescript-eslint/eslint-plugin": "^5.30.3",
     "@typescript-eslint/parser": "^5.30.3",
