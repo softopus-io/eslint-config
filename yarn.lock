@@ -32,6 +32,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@softopus/eslint-config@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "@softopus/eslint-config@workspace:."
+  dependencies:
+    "@typescript-eslint/eslint-plugin": ^5.30.3
+    "@typescript-eslint/parser": ^5.30.3
+    eslint-config-prettier: ^8.5.0
+    eslint-plugin-prettier: ^4.0.0
+    prettier: ^2.7.1
+    prettier-plugin-organize-imports: ^3.0.0
+    typescript: 4.5.4
+  peerDependencies:
+    eslint: ^8.5.0
+  languageName: unknown
+  linkType: soft
+
 "@types/json-schema@npm:^7.0.9":
   version: 7.0.11
   resolution: "@types/json-schema@npm:7.0.11"
@@ -213,22 +229,6 @@ __metadata:
   checksum: 0d0f5c32e7a0ad91249467ce71ca92394ccd343178277d318baf32063b79ea90216f4c81d1065d60f96366fdc60f151d4d68ae7811a58bd37228b84c2083f893
   languageName: node
   linkType: hard
-
-"eslint-config-softopus@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "eslint-config-softopus@workspace:."
-  dependencies:
-    "@typescript-eslint/eslint-plugin": ^5.30.3
-    "@typescript-eslint/parser": ^5.30.3
-    eslint-config-prettier: ^8.5.0
-    eslint-plugin-prettier: ^4.0.0
-    prettier: ^2.7.1
-    prettier-plugin-organize-imports: ^3.0.0
-    typescript: 4.5.4
-  peerDependencies:
-    eslint: ^8.5.0
-  languageName: unknown
-  linkType: soft
 
 "eslint-plugin-prettier@npm:^4.0.0":
   version: 4.2.1
