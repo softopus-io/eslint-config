@@ -58,8 +58,8 @@ jobs:
           # Initialize a new package
           yarn init -y
 
-          # Install the package locally
-          yarn add ../../index.js
+          # Install the package locally using relative path from workspace
+          yarn add file:../index.js
 
           # Test that it can be used
           node -e "
