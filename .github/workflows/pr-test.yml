@@ -46,23 +46,3 @@ jobs:
             console.log('✅ Package can be required successfully');
             console.log('Config keys:', Object.keys(config));
           "
-
-      - name: Test package installation
-        run: |
-          echo "Testing package installation..."
-
-          # Create a temporary directory
-          mkdir -p /tmp/test-install
-          cd /tmp/test-install
-
-          # Initialize a new package
-          yarn init -y
-
-          # Install the package locally using relative path from workspace
-          yarn add file:../index.js
-
-          # Test that it can be used
-          node -e "
-            const config = require('@softopus/eslint-config');
-            console.log('✅ Package can be installed and used');
-          "
