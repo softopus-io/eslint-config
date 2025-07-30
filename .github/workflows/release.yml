@@ -1,114 +1,22 @@
-name: Release
+name: Publish ESLint Config
 
 on:
-  workflow_dispatch:
-    inputs:
-      version:
-        description: "Version to release (e.g., 2.1.0)"
-        required: true
-        type: string
-      create_tag:
-        description: "Create git tag"
-        required: false
-        default: true
-        type: boolean
-      publish_to_npm:
-        description: "Publish to npm"
-        required: false
-        default: true
-        type: boolean
+  release:
+    types: [created]
 
 jobs:
-  release:
-    name: Release Package
+  publish:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
         with:
-          fetch-depth: 0
+          node-version: 20
+          registry-url: https://registry.npmjs.org
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: "20"
-          cache: "npm"
-          registry-url: "https://registry.npmjs.org"
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Run tests
-        run: |
-          echo "Running tests before release..."
-
-          # Verify package.json
-          node -e "JSON.parse(require('fs').readFileSync('package.json', 'utf8'))"
-
-          # Verify index.js
-          node -c index.js
-
-          # Test the config
-          node -e "const config = require('./index.js'); console.log('Config loaded successfully');"
-
-      - name: Verify current version
-        run: |
-          echo "Current version in package.json:"
-          node -e "console.log(require('./package.json').version)"
-          echo ""
-          echo "Expected release version: ${{ github.event.inputs.version }}"
-          echo ""
-          echo "⚠️  Please ensure the version in package.json matches the release version before proceeding."
-
-      - name: Create Release
-        if: github.event.inputs.create_tag == 'true'
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: v${{ github.event.inputs.version }}
-          release_name: Release v${{ github.event.inputs.version }}
-          body: |
-            ## Changes in v${{ github.event.inputs.version }}
-
-            This release includes updates to the ESLint configuration package.
-
-            ### What's Changed
-            - Updated ESLint configuration rules
-            - Improved TypeScript support
-            - Enhanced import sorting
-            - Better code quality enforcement
-
-            ### Installation
-            ```bash
-            npm install --save-dev @softopus/eslint-config@${{ github.event.inputs.version }}
-            ```
-          draft: false
-          prerelease: false
-
-      - name: Publish to NPM
-        if: github.event.inputs.publish_to_npm == 'true'
-        run: |
-          echo "Publishing to NPM..."
-          npm publish --access public
+      - run: npm ci
+      - run: npm test
+      - run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-      - name: Create Git Tag
-        if: github.event.inputs.create_tag == 'true'
-        run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          git tag -a "v${{ github.event.inputs.version }}" -m "Release v${{ github.event.inputs.version }}"
-          git push origin "v${{ github.event.inputs.version }}"
-
-      - name: Release Summary
-        run: |
-          echo "🎉 Release Summary"
-          echo "=================="
-          echo "Version: ${{ github.event.inputs.version }}"
-          echo "Git Tag: ${{ github.event.inputs.create_tag == 'true' && 'Created' || 'Skipped' }}"
-          echo "NPM Publish: ${{ github.event.inputs.publish_to_npm == 'true' && 'Published' || 'Skipped' }}"
-          echo ""
-          echo "✅ Release completed successfully!"
