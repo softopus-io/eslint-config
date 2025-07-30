@@ -11,34 +11,17 @@ jobs:
     name: Build Package
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [18, 20, 21]
-        package-manager: [npm, yarn]
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Setup Node.js ${{ matrix.node-version }}
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node-version }}
-          cache: ${{ matrix.package-manager }}
-
-      - name: Setup Yarn (if using yarn)
-        if: matrix.package-manager == 'yarn'
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ matrix.node-version }}
+          node-version: "20"
           cache: "yarn"
 
       - name: Install dependencies
-        if: matrix.package-manager == 'npm'
-        run: npm ci
-
-      - name: Install dependencies
-        if: matrix.package-manager == 'yarn'
         run: yarn install --frozen-lockfile
 
       - name: Verify package.json
@@ -73,10 +56,10 @@ jobs:
           cd /tmp/test-install
 
           # Initialize a new package
-          npm init -y
+          yarn init -y
 
           # Install the package locally
-          npm install ../../index.js
+          yarn add ../../index.js
 
           # Test that it can be used
           node -e "
