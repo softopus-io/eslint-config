@@ -1,8 +1,14 @@
 {
   "name": "@softopus/eslint-config",
-  "version": "1.0.2",
+  "version": "2.0.0",
   "main": "index.js",
   "public": true,
+  "scripts": {
+    "test": "node scripts/test.js",
+    "lint": "eslint . --ext .js,.ts,.jsx,.tsx --config index.js",
+    "lint:fix": "eslint . --ext .js,.ts,.jsx,.tsx --config index.js --fix",
+    "validate": "npm run test && npm run lint"
+  },
   "dependencies": {
     "@eslint/js": "^9.21.0",
     "@typescript-eslint/eslint-plugin": "^8.20.0",

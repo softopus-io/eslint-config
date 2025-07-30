@@ -1,0 +1,85 @@
+name: PR Test & Build
+
+on:
+  pull_request:
+    branches: [main, master]
+  push:
+    branches: [main, master]
+
+jobs:
+  build:
+    name: Build Package
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18, 20, 21]
+        package-manager: [npm, yarn]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: ${{ matrix.package-manager }}
+
+      - name: Setup Yarn (if using yarn)
+        if: matrix.package-manager == 'yarn'
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "yarn"
+
+      - name: Install dependencies
+        if: matrix.package-manager == 'npm'
+        run: npm ci
+
+      - name: Install dependencies
+        if: matrix.package-manager == 'yarn'
+        run: yarn install --frozen-lockfile
+
+      - name: Verify package.json
+        run: |
+          echo "Checking package.json syntax..."
+          node -e "JSON.parse(require('fs').readFileSync('package.json', 'utf8'))"
+          echo "✅ package.json is valid"
+
+      - name: Verify index.js syntax
+        run: |
+          echo "Checking index.js syntax..."
+          node -c index.js
+          echo "✅ index.js is valid"
+
+      - name: Test package build
+        run: |
+          echo "Testing package build..."
+
+          # Verify the package can be required
+          node -e "
+            const config = require('./index.js');
+            console.log('✅ Package can be required successfully');
+            console.log('Config keys:', Object.keys(config));
+          "
+
+      - name: Test package installation
+        run: |
+          echo "Testing package installation..."
+
+          # Create a temporary directory
+          mkdir -p /tmp/test-install
+          cd /tmp/test-install
+
+          # Initialize a new package
+          npm init -y
+
+          # Install the package locally
+          npm install ../../index.js
+
+          # Test that it can be used
+          node -e "
+            const config = require('@softopus/eslint-config');
+            console.log('✅ Package can be installed and used');
+          "

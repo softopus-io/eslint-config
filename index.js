@@ -3,6 +3,7 @@ module.exports = {
   env: {
     es2020: true,
     node: true,
+    browser: true,
   },
   plugins: [
     "@typescript-eslint",
@@ -28,6 +29,8 @@ module.exports = {
       "error",
       {
         groups: [
+          ["^next"],
+
           ["^\\u0000"],
 
           ["^node:"],
