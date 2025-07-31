@@ -29,9 +29,9 @@ module.exports = {
       "error",
       {
         groups: [
-          ["^next"],
-
           ["^\\u0000"],
+
+          ["^next"],
 
           ["^node:"],
 
