@@ -3,6 +3,7 @@
   "version": "2.0.0",
   "main": "index.js",
   "public": true,
+  "license": "MIT",
   "scripts": {
     "test": "node scripts/test.js",
     "lint": "eslint . --ext .js,.ts,.jsx,.tsx --config index.js",
@@ -25,6 +26,7 @@
     "eslint": "^9.18.0"
   },
   "devDependencies": {
+    "eslint": "^9.18.0",
     "eslint-plugin-unicorn": "^60.0.0"
   }
 }
