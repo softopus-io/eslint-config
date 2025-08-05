@@ -1,6 +1,6 @@
 {
   "name": "@softopus/eslint-config",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "main": "index.js",
   "public": true,
   "license": "MIT",
