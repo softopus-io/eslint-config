@@ -50,20 +50,19 @@ try {
 console.log("\n3. Testing ESLint configuration...");
 try {
   const config = require(path.join(__dirname, "..", "index.js"));
+  // Check if config is an array (flat config format)
+  if (!Array.isArray(config)) {
+    throw new Error("Configuration should be an array (flat config format)");
+  }
 
-  // Check if config has required properties
-  const requiredProps = ["parser", "plugins", "extends", "rules"];
-  for (const prop of requiredProps) {
-    if (!config[prop]) {
-      throw new Error(`Missing required property: ${prop}`);
-    }
+  // Check if config has at least one item
+  if (config.length === 0) {
+    throw new Error("Configuration array is empty");
   }
 
   console.log("✅ ESLint configuration is valid");
-  console.log(`   - Parser: ${config.parser}`);
-  console.log(`   - Plugins: ${config.plugins.length} plugins`);
-  console.log(`   - Extends: ${config.extends.length} configs`);
-  console.log(`   - Rules: ${Object.keys(config.rules).length} rules`);
+  console.log(`   - Config array length: ${config.length}`);
+  console.log(`   - Flat config format: ✅`);
 } catch (error) {
   console.error("❌ ESLint configuration test failed:", error.message);
   process.exit(1);
@@ -149,22 +148,38 @@ console.log("\n5. Checking for common issues...");
 try {
   const config = require(path.join(__dirname, "..", "index.js"));
 
-  // Check for console.log rule
-  if (config.rules["no-console"] === "error") {
+  // For flat config, we need to check the rules in the config objects
+  let hasConsoleRule = false;
+  let hasImportSorting = false;
+  let hasUnusedImports = false;
+
+  for (const configItem of config) {
+    if (configItem.rules) {
+      if (configItem.rules["no-console"] === "error") {
+        hasConsoleRule = true;
+      }
+      if (configItem.rules["simple-import-sort/imports"]) {
+        hasImportSorting = true;
+      }
+      if (configItem.rules["unused-imports/no-unused-imports"]) {
+        hasUnusedImports = true;
+      }
+    }
+  }
+
+  if (hasConsoleRule) {
     console.log("✅ Console statements are properly restricted");
   } else {
     console.log("⚠️  Console statements are not restricted");
   }
 
-  // Check for import sorting
-  if (config.rules["simple-import-sort/imports"]) {
+  if (hasImportSorting) {
     console.log("✅ Import sorting is configured");
   } else {
     console.log("⚠️  Import sorting is not configured");
   }
 
-  // Check for unused imports
-  if (config.rules["unused-imports/no-unused-imports"]) {
+  if (hasUnusedImports) {
     console.log("✅ Unused imports detection is configured");
   } else {
     console.log("⚠️  Unused imports detection is not configured");
