@@ -4,7 +4,7 @@ const prettier = require("eslint-config-prettier");
 const prettierPlugin = require("eslint-plugin-prettier");
 const simpleImportSort = require("eslint-plugin-simple-import-sort");
 const unusedImports = require("eslint-plugin-unused-imports");
-const unicorn = require("eslint-plugin-unicorn");
+const unicorn = require("eslint-plugin-unicorn").default;
 
 module.exports = [
   js.configs.recommended,
