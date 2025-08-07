@@ -19,11 +19,6 @@ module.exports = [
         sourceType: "module",
       },
     },
-    environment: {
-      browser: true,
-      node: true,
-      es2020: true,
-    },
     plugins: {
       "@typescript-eslint": tseslint.plugin,
       "simple-import-sort": simpleImportSort,
@@ -96,7 +91,7 @@ module.exports = [
         {
           printWidth: 80,
           trailingComma: "all",
-          singleQuote: true,
+          singleQuote: false,
           endOfLine: "lf",
           semi: true,
           tabWidth: 2,
