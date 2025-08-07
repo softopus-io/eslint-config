@@ -1,6 +1,6 @@
 {
   "name": "@softopus/eslint-config",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "main": "index.js",
   "public": true,
   "license": "MIT",
@@ -17,16 +17,16 @@
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.2.2",
     "eslint-plugin-simple-import-sort": "^12.1.1",
-    "eslint-plugin-unused-imports": "^2.0.0",
+    "eslint-plugin-unused-imports": "^4.1.4",
     "prettier": "^3.4.0",
     "typescript": "5.7.3",
-    "typescript-eslint": "^8.26.0"
+    "typescript-eslint": "^8.26.0",
+    "eslint-plugin-unicorn": "^60.0.0"
   },
   "peerDependencies": {
     "eslint": "^9.18.0"
   },
   "devDependencies": {
-    "eslint": "^9.18.0",
-    "eslint-plugin-unicorn": "^60.0.0"
+    "eslint": "^9.18.0"
   }
 }
