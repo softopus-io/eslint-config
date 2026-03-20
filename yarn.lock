@@ -139,7 +139,6 @@ __metadata:
     eslint-plugin-simple-import-sort: "npm:^12.1.1"
     eslint-plugin-unicorn: "npm:^63.0.0"
     eslint-plugin-unused-imports: "npm:^4.4.1"
-    globals: "npm:^16.0.0"
     prettier: "npm:^3.4.0"
     typescript: "npm:5.7.3"
     typescript-eslint: "npm:^8.57.1"
@@ -763,7 +762,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"globals@npm:^16.0.0, globals@npm:^16.4.0":
+"globals@npm:^16.4.0":
   version: 16.5.0
   resolution: "globals@npm:16.5.0"
   checksum: 10c0/615241dae7851c8012f5aa0223005b1ed6607713d6813de0741768bd4ddc39353117648f1a7086b4b0fa45eae733f1c0a0fe369aa4e543bb63f8de8990178ea9

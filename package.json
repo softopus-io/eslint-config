@@ -2,6 +2,7 @@
   "name": "@softopus/eslint-config",
   "version": "2.2.0",
   "main": "index.js",
+  "type": "module",
   "public": true,
   "license": "MIT",
   "packageManager": "yarn@4.7.0",
@@ -20,7 +21,6 @@
     "eslint-plugin-simple-import-sort": "^12.1.1",
     "eslint-plugin-unicorn": "^63.0.0",
     "eslint-plugin-unused-imports": "^4.4.1",
-    "globals": "^16.0.0",
     "prettier": "^3.4.0",
     "typescript": "5.7.3",
     "typescript-eslint": "^8.57.1"

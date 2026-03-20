@@ -1,12 +1,13 @@
-const js = require("@eslint/js");
-const tseslint = require("typescript-eslint");
-const prettier = require("eslint-config-prettier");
-const prettierPlugin = require("eslint-plugin-prettier");
-const simpleImportSort = require("eslint-plugin-simple-import-sort");
-const unusedImports = require("eslint-plugin-unused-imports");
-const unicorn = require("eslint-plugin-unicorn").default;
+import js from "@eslint/js";
+import prettier from "eslint-config-prettier";
+import prettierPlugin from "eslint-plugin-prettier";
+import simpleImportSort from "eslint-plugin-simple-import-sort";
+import unicorn from "eslint-plugin-unicorn";
+import unusedImports from "eslint-plugin-unused-imports";
+import tseslint from "typescript-eslint";
 
-module.exports = [
+export default [
+  { ignores: [".yarn/", "node_modules/", "scripts/"] },
   js.configs.recommended,
   ...tseslint.configs.recommended,
   {
