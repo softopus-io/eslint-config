@@ -26,3 +26,6 @@ jobs:
 
       - name: QA
         run: make qa
+
+      - name: Pack
+        run: make pack

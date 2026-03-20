@@ -14,7 +14,7 @@ endef
 help: ## Show this help
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
-.PHONY: install test lint qa
+.PHONY: install test lint qa publish publish-dry
 
 install: ## Install dependencies
 	yarn install
@@ -28,3 +28,9 @@ lint: ## Run lint
 qa: ## Run tests and lint
 	yarn test
 	yarn lint
+
+publish: ## Publish to npm
+	npm publish --access public
+
+pack: ## Simulate full publish process without actually publishing
+	npm publish --dry-run --access public

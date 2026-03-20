@@ -3,6 +3,9 @@
   "version": "3.0.0",
   "main": "index.js",
   "type": "module",
+  "files": [
+    "index.js"
+  ],
   "public": true,
   "license": "MIT",
   "packageManager": "yarn@4.7.0",
@@ -10,7 +13,7 @@
     "test": "node scripts/test.js",
     "lint": "eslint . --ext .js,.ts,.jsx,.tsx --config index.js",
     "lint:fix": "eslint . --ext .js,.ts,.jsx,.tsx --config index.js --fix",
-    "validate": "npm run test && npm run lint"
+    "validate": "yarn test && yarn lint"
   },
   "dependencies": {
     "@eslint/js": "^10.0.1",
