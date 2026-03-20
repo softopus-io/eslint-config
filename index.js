@@ -78,6 +78,13 @@ export default [
       "no-restricted-imports": [
         "error",
         {
+          paths: [
+            {
+              name: "@lingui/macro",
+              importNames: ["Trans"],
+              message: "Please use `@lingui/react` instead",
+            },
+          ],
           patterns: [
             {
               group: ["../../*"],
