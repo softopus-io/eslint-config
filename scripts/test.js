@@ -14,7 +14,7 @@ console.log("🧪 Testing @softopus/eslint-config...\n");
 console.log("1. Validating package.json...");
 try {
   const packageJson = JSON.parse(
-    fs.readFileSync(path.join(__dirname, "..", "package.json"), "utf8")
+    fs.readFileSync(path.join(__dirname, "..", "package.json"), "utf8"),
   );
   const requiredFields = [
     "name",
@@ -121,13 +121,13 @@ try {
         {
           stdio: "pipe",
           cwd: path.join(__dirname, ".."),
-        }
+        },
       );
       console.log(`   ✅ ${file.name} - No linting errors`);
-    } catch (error) {
+    } catch {
       // ESLint will exit with code 1 if there are errors, which is expected
       console.log(
-        `   ⚠️  ${file.name} - Linting issues found (expected for test files)`
+        `   ⚠️  ${file.name} - Linting issues found (expected for test files)`,
       );
     }
   }
