@@ -5,8 +5,12 @@
  * This script validates the ESLint configuration and tests it with sample files
  */
 
-const fs = require("fs");
-const path = require("path");
+import fs from "node:fs";
+import path from "node:path";
+import { execSync } from "node:child_process";
+import { fileURLToPath } from "node:url";
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 console.log("🧪 Testing @softopus/eslint-config...\n");
 
@@ -14,7 +18,7 @@ console.log("🧪 Testing @softopus/eslint-config...\n");
 console.log("1. Validating package.json...");
 try {
   const packageJson = JSON.parse(
-    fs.readFileSync(path.join(__dirname, "..", "package.json"), "utf8")
+    fs.readFileSync(path.join(__dirname, "..", "package.json"), "utf8"),
   );
   const requiredFields = [
     "name",
@@ -39,7 +43,10 @@ try {
 // Test 2: Validate index.js syntax
 console.log("\n2. Validating index.js syntax...");
 try {
-  require(path.join(__dirname, "..", "index.js"));
+  const { default: config } = await import(
+    path.join(__dirname, "..", "index.js")
+  );
+  if (!config) throw new Error("No default export");
   console.log("✅ index.js syntax is valid");
 } catch (error) {
   console.error("❌ index.js syntax validation failed:", error.message);
@@ -49,13 +56,14 @@ try {
 // Test 3: Test ESLint configuration
 console.log("\n3. Testing ESLint configuration...");
 try {
-  const config = require(path.join(__dirname, "..", "index.js"));
-  // Check if config is an array (flat config format)
+  const { default: config } = await import(
+    path.join(__dirname, "..", "index.js")
+  );
+
   if (!Array.isArray(config)) {
     throw new Error("Configuration should be an array (flat config format)");
   }
 
-  // Check if config has at least one item
   if (config.length === 0) {
     throw new Error("Configuration array is empty");
   }
@@ -103,31 +111,26 @@ if (!fs.existsSync(tempDir)) {
 }
 
 try {
-  // Create test files
   for (const file of testFiles) {
     const filePath = path.join(tempDir, file.name);
     fs.writeFileSync(filePath, file.content);
     console.log(`   Created ${file.name}`);
   }
 
-  // Test ESLint on the files
-  const { execSync } = require("child_process");
-
   for (const file of testFiles) {
     const filePath = path.join(tempDir, file.name);
     try {
       execSync(
-        `npx eslint ${filePath} --config ${path.join(__dirname, "..", "index.js")} --no-eslintrc`,
+        `npx eslint ${filePath} --config ${path.join(__dirname, "..", "index.js")}`,
         {
           stdio: "pipe",
           cwd: path.join(__dirname, ".."),
-        }
+        },
       );
       console.log(`   ✅ ${file.name} - No linting errors`);
-    } catch (error) {
-      // ESLint will exit with code 1 if there are errors, which is expected
+    } catch {
       console.log(
-        `   ⚠️  ${file.name} - Linting issues found (expected for test files)`
+        `   ⚠️  ${file.name} - Linting issues found (expected for test files)`,
       );
     }
   }
@@ -136,7 +139,6 @@ try {
 } catch (error) {
   console.error("❌ Sample file testing failed:", error.message);
 } finally {
-  // Cleanup
   if (fs.existsSync(tempDir)) {
     fs.rmSync(tempDir, { recursive: true, force: true });
   }
@@ -146,9 +148,10 @@ try {
 console.log("\n5. Checking for common issues...");
 
 try {
-  const config = require(path.join(__dirname, "..", "index.js"));
+  const { default: config } = await import(
+    path.join(__dirname, "..", "index.js")
+  );
 
-  // For flat config, we need to check the rules in the config objects
   let hasConsoleRule = false;
   let hasImportSorting = false;
   let hasUnusedImports = false;
