@@ -1,9 +1,10 @@
 {
   "name": "@softopus/eslint-config",
-  "version": "2.0.3",
+  "version": "2.2.0",
   "main": "index.js",
   "public": true,
   "license": "MIT",
+  "packageManager": "yarn@4.7.0",
   "scripts": {
     "test": "node scripts/test.js",
     "lint": "eslint . --ext .js,.ts,.jsx,.tsx --config index.js",
@@ -11,22 +12,23 @@
     "validate": "npm run test && npm run lint"
   },
   "dependencies": {
-    "@eslint/js": "^9.21.0",
-    "@typescript-eslint/eslint-plugin": "^8.20.0",
-    "@typescript-eslint/parser": "^8.20.0",
+    "@eslint/js": "^10.0.1",
+    "@typescript-eslint/eslint-plugin": "^8.57.1",
+    "@typescript-eslint/parser": "^8.57.1",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.2.2",
     "eslint-plugin-simple-import-sort": "^12.1.1",
-    "eslint-plugin-unused-imports": "^4.1.4",
+    "eslint-plugin-unicorn": "^63.0.0",
+    "eslint-plugin-unused-imports": "^4.4.1",
+    "globals": "^16.0.0",
     "prettier": "^3.4.0",
     "typescript": "5.7.3",
-    "typescript-eslint": "^8.26.0",
-    "eslint-plugin-unicorn": "^60.0.0"
+    "typescript-eslint": "^8.57.1"
   },
   "peerDependencies": {
-    "eslint": "^9.18.0"
+    "eslint": "^10.0.0"
   },
   "devDependencies": {
-    "eslint": "^9.18.0"
+    "eslint": "^10.0.0"
   }
 }
