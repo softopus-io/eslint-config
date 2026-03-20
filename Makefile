@@ -29,8 +29,8 @@ qa: ## Run tests and lint
 	yarn test
 	yarn lint
 
-publish: ## Publish to npm
-	npm publish --access public
+publish: ## Publish to npm (with provenance, run in CI only)
+	npm publish --access public --provenance
 
 pack: ## Simulate full publish process without actually publishing
 	npm publish --dry-run --access public
